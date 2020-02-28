@@ -32,9 +32,9 @@ export function generateBrowserClientSource(ast: AstRoot, options: Options) {
 ${ast.operations
     .map(
         op => `
-    ${op.prettyName}(args${op.args.length === 0 ? "?" : ""}: {${op.args
+    ${op.prettyName} = (args${op.args.length === 0 ? "?" : ""}: {${op.args
             .map(arg => `${arg.name}${arg.type.name.endsWith("?") ? "?" : ""}: ${generateTypescriptTypeName(arg.type)}`)
-            .join(", ")}}): Promise<${generateTypescriptTypeName(op.returnType)}> { return this.makeRequest("${op.prettyName}", args || {}); }`,
+            .join(", ")}}): Promise<${generateTypescriptTypeName(op.returnType)}> => { return this.makeRequest("${op.prettyName}", args || {}); }`,
     )
     .join("")}
 }\n\n`;
