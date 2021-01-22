@@ -5,15 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [10.x, 12.x, 14.x, 15.x]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
-        working-directory: ./browser-runtime
-      - run: npm run prettier:check
         working-directory: ./browser-runtime
       - run: npm run eslint:check
         working-directory: ./browser-runtime
@@ -26,15 +24,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [10.x, 12.x, 14.x, 15.x]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
-        working-directory: ./cli
-      - run: npm run prettier:check
         working-directory: ./cli
       - run: npm run eslint:check
         working-directory: ./cli
@@ -47,15 +43,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [10.x, 12.x, 14.x, 15.x]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
-        working-directory: ./dart-generator
-      - run: npm run prettier:check
         working-directory: ./dart-generator
       - run: npm run eslint:check
         working-directory: ./dart-generator
@@ -94,7 +88,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [10.x, 12.x, 14.x, 15.x]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -102,8 +96,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm install
         working-directory: ./node-runtime
-      - run: npm run prettier:check
-        working-directory: ./node-runtime
+      - run: npm install
+        working-directory: ./dart-generator
+      - run: npm install
+        working-directory: ./typescript-generator
       - run: npm run eslint:check
         working-directory: ./node-runtime
       - run: npm run build
@@ -115,15 +111,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [10.x, 12.x, 14.x, 15.x]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
-        working-directory: ./parser
-      - run: npm run prettier:check
         working-directory: ./parser
       - run: npm run eslint:check
         working-directory: ./parser
@@ -136,15 +130,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [10.x, 12.x, 14.x, 15.x]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
-        working-directory: ./playground
-      - run: npm run prettier:check
         working-directory: ./playground
       - run: npm run eslint:check
         working-directory: ./playground
@@ -155,15 +147,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [10.x, 12.x, 14.x, 15.x]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
-        working-directory: ./typescript-generator
-      - run: npm run prettier:check
         working-directory: ./typescript-generator
       - run: npm run eslint:check
         working-directory: ./typescript-generator
@@ -176,15 +166,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [10.x, 12.x, 14.x, 15.x]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
-        working-directory: ./csharp-generator
-      - run: npm run prettier:check
         working-directory: ./csharp-generator
       - run: npm run eslint:check
         working-directory: ./csharp-generator
@@ -210,15 +198,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [10.x, 12.x, 14.x, 15.x]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
-        working-directory: ./kotlin-generator
-      - run: npm run prettier:check
         working-directory: ./kotlin-generator
       - run: npm run eslint:check
         working-directory: ./kotlin-generator

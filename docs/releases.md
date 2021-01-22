@@ -1,10 +1,58 @@
 # Releases
 
+## 1.5.0 (2021-01-XX)
+
+**Middlewares**
+
+Agora é possível adicionar múltiplos middlewares na configuração de uma API, possibilitando tomar ações a depender dos argumentos ou do retorno.
+
+```typescript
+api.use(async (ctx, next) => {
+  // Faça qualquer coisa com o `ctx` aqui.
+  // O nome da função é `ctx.request.name` e os argumentos `ctx.request.args`.
+  const reply = await next();
+  // Faça qualquer coisa com a resposta aqui.
+  return reply;
+});
+```
+
+Os hooks anteriores de `onRequestStart` e `onRequestEnd` continuam funcionando, mas estão agora depreciados.
+
+Você pode, por exemplo:
+
+- Salvar os dados da requisição e resposta em um log;
+- Medir estatísticas das requisições;
+- Controlar rate limit;
+- Bloquear ou redirecionar chamadas a depender da função e dos argumentos;
+- Implementar cache;
+- Implementar re-tentativa a depender de algum erro específico (chamando `next` mais de uma vez);
+- Modificar o erro retornado (`try`/`catch` em volta do `next`).
+
+## 1.4.3 (2021-01-18)
+
+**Correções**
+
+- Gerador de código do Flutter com erros que contém dados (`SdkgenErrorWithData`) agora produzem código válido ([#171](https://github.com/sdkgen/sdkgen/pull/171)).
+- Gerador de código do Android agora utiliza `SupervisorJob` ([#168](https://github.com/sdkgen/sdkgen/pull/168)).
+
+## 1.4.2 (2020-12-21)
+
+**Correções**
+
+- `SdkgenErrorWithData` não será mais importado pelo código gerado sem necessidade, evitando problemas com linter ([#141](https://github.com/sdkgen/sdkgen/pull/141)).
+- Correção na uso do `WebpackManifestPlugin` no playground.
+- Correção no syntax highlighting no Visual Studio Code para `error` ([#152](https://github.com/sdkgen/sdkgen/pull/152)).
+- Correção no processamento do tipo `money` no Flutter ([#153](https://github.com/sdkgen/sdkgen/pull/153)).
+- Código duplicado removido ([#155](https://github.com/sdkgen/sdkgen/pull/155)).
+- Correção ao gerar classes de erro no Flutter ([#160](https://github.com/sdkgen/sdkgen/pull/160)).
+- Correção no processamento do tipo `json` no Flutter ([#159](https://github.com/sdkgen/sdkgen/pull/159)).
+- Atualização de dependências.
+
 ## 1.4.1 (2020-11-30)
 
 **Correções**
 
-- Correção de regressão na versão 1.4.0 em que o brower-runtime não retornava o conteúdo da resposta em caso de sucesso.
+- Correção de regressão na versão 1.4.0 em que o browser-runtime não retornava o conteúdo da resposta em caso de sucesso.
 - Suporte ao tipo primitivo `email` no Swagger gerado para funções `@rest` ([#140](https://github.com/sdkgen/sdkgen/pull/140)).
 - Correção de exemplo na documentação ([#137](https://github.com/sdkgen/sdkgen/pull/137)).
 

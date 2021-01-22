@@ -1,12 +1,19 @@
-import { AstRoot, astToJson, HiddenAnnotation, VoidPrimitiveType } from "@sdkgen/parser";
+import type { AstRoot } from "@sdkgen/parser";
+import { astToJson, HiddenAnnotation, VoidPrimitiveType } from "@sdkgen/parser";
+
 import { generateTypescriptEnum, generateTypescriptErrorClass, generateTypescriptInterface, generateTypescriptTypeName } from "./helpers";
 
 export function generateNodeClientSource(ast: AstRoot): string {
   let code = "";
 
   const hasErrorWithData = ast.errors.some(err => !(err.dataType instanceof VoidPrimitiveType));
+  const hasErrorWithoutData = ast.errors.filter(err => err.name !== "Fatal").some(err => err.dataType instanceof VoidPrimitiveType);
 
-  code += `import { Context, SdkgenError${hasErrorWithData ? ", SdkgenErrorWithData" : ""}, SdkgenHttpClient } from "@sdkgen/node-runtime";
+  code += `/* eslint-disable */
+import { Context, Fatal${hasErrorWithoutData ? ", SdkgenError" : ""}${
+    hasErrorWithData ? ", SdkgenErrorWithData" : ""
+  }, SdkgenHttpClient } from "@sdkgen/node-runtime";
+export { Fatal } from "@sdkgen/node-runtime";
 
 `;
 
@@ -21,6 +28,10 @@ export function generateNodeClientSource(ast: AstRoot): string {
   }
 
   for (const error of ast.errors) {
+    if (error.name === "Fatal") {
+      continue;
+    }
+
     code += generateTypescriptErrorClass(error);
     code += "\n";
   }
@@ -42,7 +53,7 @@ ${ast.operations
 
   code += `const errClasses = {\n${ast.errors.map(err => `    ${err.name}`).join(",\n")}\n};\n\n`;
 
-  code += `const astJson = ${JSON.stringify(astToJson(ast), null, 4).replace(/"(?<key>\w+)":/gu, "$<key>:")};\n`;
+  code += `const astJson = ${JSON.stringify(astToJson(ast), null, 4).replace(/"(?<key>\w+)":/gu, "$<key>:")} as const;\n`;
 
   return code;
 }
