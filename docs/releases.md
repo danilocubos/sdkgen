@@ -1,6 +1,38 @@
 # Releases
 
-## 1.5.0 (2021-01-XX)
+## 1.5.5 (2021-02-22)
+
+**Correções:**
+- Correção no carregamento do `/playground` por conta de regressão causada pela versão 1.5.4 ([#184](https://github.com/sdkgen/sdkgen/pull/184)).
+
+## 1.5.4 (2021-02-19)
+
+**Correções:**
+- Correção no recebimento de objetos retornados pela API no browser-runtime ([#181](https://github.com/sdkgen/sdkgen/pull/181)).
+- Correção no tratamento de rotas REST para que caso mais de uma rota encaixe com uma requisição, aquela que contém a maior quantidade de caracteres que não fazem parte dos argumentos seja escolhida ([#179](https://github.com/sdkgen/sdkgen/pull/179)).
+- Mudança no tratamento de rotas REST de forma que argumentos do tipo `string` dentra da path não possam mais conter o caracter `/` ([#179](https://github.com/sdkgen/sdkgen/pull/179)).
+- Validação de datas no browser-runtime e node-runtime de forma que uma data inválida não seja aceita ([#180](https://github.com/sdkgen/sdkgen/pull/180)).
+- Atualização de dependências.
+
+## 1.5.3 (2021-02-10)
+
+**Correção:**
+- Ajustado o tipo `TypeDescription` utilizado para tipagem dos clientes em Node e Web com respeito ao enums.
+
+Esta release não inclui nenhuma alteração no comportamento durante execução.
+
+## 1.5.2 (2021-02-09)
+
+**Correção:**
+- O tipo de retorno das funções `encode` e `decode` do `@sdkgen/node-runtime` estava sendo incorretamente inferido quando o tipo possuia um enum. Essa tipagem foi corrigida.
+
+Esta release não inclui nenhuma alteração no comportamento durante execução.
+
+## 1.5.1 (2021-01-26)
+
+Nenhuma alteração.
+
+## 1.5.0 (2021-01-26)
 
 **Middlewares**
 
@@ -27,6 +59,21 @@ Você pode, por exemplo:
 - Implementar cache;
 - Implementar re-tentativa a depender de algum erro específico (chamando `next` mais de uma vez);
 - Modificar o erro retornado (`try`/`catch` em volta do `next`).
+
+Ver [#161](https://github.com/sdkgen/sdkgen/pull/161).
+
+**Outras mudanças**
+
+- Suporte ao Node.js 15 ([#115](https://github.com/sdkgen/sdkgen/pull/115)).
+- Configuração do eslint renovada e tipagem mais forte em todos os pacotes TypeScript ([#166](https://github.com/sdkgen/sdkgen/pull/166)).
+- Licença do projeto modificada para MIT ([#167](https://github.com/sdkgen/sdkgen/pull/167)).
+- Atualização de dependências.
+
+## 1.4.4 (2021-01-26)
+
+**Correções**
+
+- Correção no runtime do Flutter ao lançar erros do tipo `SdkgenErrorWithData` ([#175](https://github.com/sdkgen/sdkgen/pull/175)).
 
 ## 1.4.3 (2021-01-18)
 

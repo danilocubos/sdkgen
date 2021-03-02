@@ -1,6 +1,7 @@
 import type { AstJson } from "./ast";
 import { decode, encode } from "./encode-decode";
 import type { SdkgenError, SdkgenErrorWithData } from "./error";
+import type { DeepReadonly } from "./utils";
 
 interface ErrClasses {
   [className: string]: (new (message: string, data: any) => SdkgenErrorWithData<any>) | (new (message: string) => SdkgenError) | undefined;
@@ -48,7 +49,7 @@ export class SdkgenHttpClient {
 
   errorHook: (result: any, name: string, args: any) => void = () => undefined;
 
-  constructor(baseUrl: string, private astJson: AstJson, private errClasses: ErrClasses) {
+  constructor(baseUrl: string, private astJson: DeepReadonly<AstJson>, private errClasses: ErrClasses) {
     this.baseUrl = baseUrl;
   }
 
@@ -58,6 +59,12 @@ export class SdkgenHttpClient {
     if (!func) {
       throw new Error(`Unknown function ${functionName}`);
     }
+
+    const extra: Record<string, any> = {};
+
+    this.extra.forEach((value, key) => {
+      extra[key] = value;
+    });
 
     const request = {
       args: encode(this.astJson.typeTable, `${functionName}.args`, func.args, args),
@@ -71,9 +78,7 @@ export class SdkgenHttpClient {
         type: "web",
         version: document.currentScript?.getAttribute("src") ?? "",
       },
-      extra: {
-        ...this.extra,
-      },
+      extra,
       name: functionName,
       requestId: randomBytesHex(16),
       version: 3,
